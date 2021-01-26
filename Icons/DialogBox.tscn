@@ -4,13 +4,17 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.129412, 0.129412, 0.129412, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_left = 207.889
 margin_top = 161.22
 margin_right = 247.889
 margin_bottom = 201.22
-rect_scale = Vector2( 14.2471, 8.09937 )
+rect_scale = Vector2( 10.3451, 4.47266 )
+text = "Howdy"
 
 [node name="LRect" type="TextureRect" parent="."]
 margin_right = 40.0

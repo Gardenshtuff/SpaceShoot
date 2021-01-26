@@ -11,5 +11,5 @@ func _on_SpawnTimer_timeout():
 func Spawn():
 	var e = entity.instance()
 	e.global_position = global_position
-	get_parent().add_child(e)
+	get_parent().get_parent().add_child(e)
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Environment/Walls_1.tres" type="TileSet" id=1]
 
-[node name="Room1" type="StaticBody2D"]
+[node name="BossRoom1" type="StaticBody2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

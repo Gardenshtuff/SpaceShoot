@@ -17,5 +17,5 @@ func _on_Timer_timeout():
 	$FadeTween.start()
 	$FadeTween2.start()
 
-func _on_FadeTween_tween_completed(object, key):
+func _on_FadeTween_tween_completed(_object, _key):
 	get_parent().remove_child(self)

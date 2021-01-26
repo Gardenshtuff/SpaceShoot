@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Effects/hiteffect1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Environment/Target.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemy/CloudBuddySpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemy/RotatingTurret.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Rooms/Cover1.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Environment/BetterSwitch.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Rooms/Room1.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Rooms/SmallRoom1.tscn" type="PackedScene" id=14]
+
+[node name="Scene1" type="Node2D"]
+position = Vector2( 1.5874, 0 )
+
+[node name="SmallRoom1" parent="." instance=ExtResource( 14 )]
+position = Vector2( -640.713, -216.083 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Room1" parent="." instance=ExtResource( 13 )]
+position = Vector2( 151.394, -660.865 )
+scale = Vector2( 2, 2 )
+
+[node name="Room3" parent="." instance=ExtResource( 13 )]
+position = Vector2( 1344, -210.073 )
+rotation = 1.5708
+scale = Vector2( 2, 4 )
+
+[node name="Room2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 149.056, 235.969 )
+rotation = -3.14159
+scale = Vector2( 2, 2 )
+
+[node name="CloudBuddySpawner" parent="Room2" instance=ExtResource( 6 )]
+position = Vector2( -169.536, 88.9895 )
+rotation = 3.14159
+scale = Vector2( 1, 1 )
+
+[node name="CloudBuddySpawner3" parent="Room2" instance=ExtResource( 6 )]
+position = Vector2( -169.536, 32.6494 )
+rotation = 3.14159
+scale = Vector2( 1, 1 )
+disabled = true
+
+[node name="CloudBuddySpawner2" parent="Room2" instance=ExtResource( 6 )]
+position = Vector2( -168.696, -22.8496 )
+rotation = 3.14159
+scale = Vector2( 1, 1 )
+
+[node name="CloudBuddySpawner4" parent="Room2" instance=ExtResource( 6 )]
+position = Vector2( -169.537, -78.1604 )
+rotation = 3.14159
+scale = Vector2( 1, 1 )
+disabled = true
+
+[node name="hiteffect1" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="Target" parent="." instance=ExtResource( 5 )]
+position = Vector2( -181.436, -29.791 )
+
+[node name="Target2" parent="." instance=ExtResource( 5 )]
+position = Vector2( -183.436, 74.2089 )
+
+[node name="Target3" parent="." instance=ExtResource( 5 )]
+position = Vector2( -183.436, 169.209 )
+
+[node name="CDSW" parent="." instance=ExtResource( 10 )]
+position = Vector2( 161.42, 527.602 )
+scale = Vector2( 2.54179, 2.61645 )
+OneShot = true
+AAradius = 30
+
+[node name="Label" type="Label" parent="CDSW"]
+visible = false
+margin_left = -22.0578
+margin_top = -16.6131
+margin_right = 53.9422
+margin_bottom = -2.61307
+rect_scale = Vector2( 0.590199, 0.550741 )
+text = "big switch :)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RotatingTurret" parent="." instance=ExtResource( 8 )]
+position = Vector2( 144.163, 232.262 )
+
+[node name="RotatingTurret2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 303.082, 231.203 )
+
+[node name="RotatingTurret3" parent="." instance=ExtResource( 8 )]
+position = Vector2( -23.2323, 236.5 )
+
+[node name="Cover1" parent="." instance=ExtResource( 9 )]
+position = Vector2( -42.8616, 392.575 )
+scale = Vector2( 5.98695, 0.366281 )

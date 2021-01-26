@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://START_menu.gd" type="Script" id=1]
-[ext_resource path="res://Enemy/CloudBuddy.tscn" type="PackedScene" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "title_bg_anim"
@@ -20,8 +19,6 @@ tracks/0/keys = {
 "values": [ Color( 0.156863, 0, 0, 1 ), Color( 0, 0.0588235, 0, 1 ), Color( 0.117647, 0.00392157, 0.117647, 1 ), Color( 0, 0, 0.156863, 1 ), Color( 0.156863, 0, 0, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
-
 [node name="START_menu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -29,7 +26,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-Nlist = [ "Node", "Node2", "Node3", "Node4", "Node5" ]
 
 [node name="CL" type="CanvasLayer" parent="."]
 
@@ -188,105 +184,6 @@ scale_amount = 3.0
 scale_amount_random = 1.0
 color = Color( 0.956863, 0.898039, 0.419608, 1 )
 
-[node name="Node" type="KinematicBody2D" parent="."]
-visible = false
-position = Vector2( -300, 0 )
-
-[node name="CloudBuddy" parent="Node" instance=ExtResource( 2 )]
-position = Vector2( 622.268, 308.354 )
-disabled = true
-
-[node name="CloudBuddy2" parent="Node" instance=ExtResource( 2 )]
-position = Vector2( 767.351, 504.574 )
-disabled = true
-
-[node name="CloudBuddy3" parent="Node" instance=ExtResource( 2 )]
-position = Vector2( 772.108, 105 )
-disabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node"]
-scale = Vector2( 3.15159, 1.74687 )
-shape = SubResource( 2 )
-
-[node name="Node3" type="KinematicBody2D" parent="."]
-visible = false
-
-[node name="CloudBuddy" parent="Node3" instance=ExtResource( 2 )]
-position = Vector2( 622.268, 308.354 )
-disabled = true
-
-[node name="CloudBuddy2" parent="Node3" instance=ExtResource( 2 )]
-position = Vector2( 767.351, 504.574 )
-disabled = true
-
-[node name="CloudBuddy3" parent="Node3" instance=ExtResource( 2 )]
-position = Vector2( 772.108, 105 )
-disabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node3"]
-scale = Vector2( 3.15159, 1.74687 )
-shape = SubResource( 2 )
-
-[node name="Node4" type="KinematicBody2D" parent="."]
-visible = false
-position = Vector2( 300, 0 )
-
-[node name="CloudBuddy" parent="Node4" instance=ExtResource( 2 )]
-position = Vector2( 622.268, 308.354 )
-disabled = true
-
-[node name="CloudBuddy2" parent="Node4" instance=ExtResource( 2 )]
-position = Vector2( 767.351, 504.574 )
-disabled = true
-
-[node name="CloudBuddy3" parent="Node4" instance=ExtResource( 2 )]
-position = Vector2( 772.108, 105 )
-disabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node4"]
-scale = Vector2( 3.15159, 1.74687 )
-shape = SubResource( 2 )
-
-[node name="Node5" type="KinematicBody2D" parent="."]
-visible = false
-position = Vector2( 600, 0 )
-
-[node name="CloudBuddy" parent="Node5" instance=ExtResource( 2 )]
-position = Vector2( 622.268, 308.354 )
-disabled = true
-
-[node name="CloudBuddy2" parent="Node5" instance=ExtResource( 2 )]
-position = Vector2( 767.351, 504.574 )
-disabled = true
-
-[node name="CloudBuddy3" parent="Node5" instance=ExtResource( 2 )]
-position = Vector2( 772.108, 105 )
-disabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node5"]
-scale = Vector2( 3.15159, 1.74687 )
-shape = SubResource( 2 )
-
-[node name="Node2" type="KinematicBody2D" parent="."]
-visible = false
-position = Vector2( -600, 0 )
-
-[node name="CloudBuddy" parent="Node2" instance=ExtResource( 2 )]
-position = Vector2( 622.268, 308.354 )
-disabled = true
-
-[node name="CloudBuddy2" parent="Node2" instance=ExtResource( 2 )]
-position = Vector2( 767.351, 504.574 )
-disabled = true
-
-[node name="CloudBuddy3" parent="Node2" instance=ExtResource( 2 )]
-position = Vector2( 772.108, 105 )
-disabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2"]
-scale = Vector2( 3.15159, 1.74687 )
-shape = SubResource( 2 )
-
 [node name="start" type="Button" parent="."]
 margin_left = 29.7301
 margin_top = 343.681
@@ -309,6 +206,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="host" type="Button" parent="."]
+margin_left = 858.608
+margin_top = 356.762
+margin_right = 905.608
+margin_bottom = 376.762
+rect_scale = Vector2( 2.66511, 2.32611 )
+text = "HOST"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="join" type="Button" parent="."]
+margin_left = 859.797
+margin_top = 435.25
+margin_right = 904.797
+margin_bottom = 455.25
+rect_scale = Vector2( 2.66511, 2.32611 )
+text = "JOIN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="."]
 margin_left = 20.2165
 margin_top = 24.9733
@@ -319,5 +238,8 @@ text = "OK BUDDY GUY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
 [connection signal="button_up" from="start" to="." method="_on_start_button_up"]
 [connection signal="button_up" from="quit" to="." method="_on_quit_button_up"]
+[connection signal="button_up" from="host" to="." method="_on_host_button_up"]
+[connection signal="button_up" from="join" to="." method="_on_join_button_up"]

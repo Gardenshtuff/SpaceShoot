@@ -1,10 +1,11 @@
 [gd_scene format=2]
 
 [node name="DeathScreen" type="Node2D"]
+scale = Vector2( 0.573071, 0.582369 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 self_modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 517.064, 225.858 )
+position = Vector2( 4.3732, 9.43686 )
 scale = Vector2( 10, 10 )
 amount = 36
 lifetime = 2.0
@@ -13,10 +14,10 @@ emission_rect_extents = Vector2( 24, 1 )
 gravity = Vector2( 0, 3 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 259.252
-margin_top = 114.005
-margin_right = 312.252
-margin_bottom = 128.005
+margin_left = -253.439
+margin_top = -102.416
+margin_right = -200.439
+margin_bottom = -88.4161
 rect_scale = Vector2( 9.93262, 7.71478 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )

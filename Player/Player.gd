@@ -14,12 +14,11 @@ var moveSPEED = 250
 var canmove = true
 var bulletdmg = 5
 
-# do not attach to player like this
 var CL
 var StatsPage
 func _ready():
-	#CL = get_tree().get_root().get_node('Game1/CanvasLayer')
-	#StatsPage = CL.get_node('StatsPage')
+	CL = get_node('CL')
+	StatsPage = CL.get_node('StatsPage')
 	ray = $RayCast2D
 	ray.collide_with_bodies = true
 	bulTimer = $BulletTimer
@@ -115,17 +114,18 @@ func killPlayer():
 	self.add_child(ef)
 	ef.scale *= 5
 	ef.get_node('CPUParticles2D').emitting = true
-	get_tree().get_root().get_node('Game1/CanvasLayer').add_child(load('res://Effects/DeathScreen.tscn').instance())
+	#get_tree().get_root().get_node('Game1/Scene1/CanvasLayer').
+	add_child(load('res://Effects/DeathScreen.tscn').instance())
 	FadeToBlack()
 	yield(get_tree().create_timer(3), 'timeout')
 	print('DEADED') 
-	var _u = get_tree().reload_current_scene()
+	# Single Player Only - restarts scene
+	#var _u = get_tree().reload_current_scene()
 
-# do not attach to player
 func FadeIn():
-	pass#CL.get_node('Panel').FadeIn()
+	CL.get_node('Panel').FadeIn()
 func FadeToBlack():
-	pass#CL.get_node('Panel').FadeToBlack()
+	CL.get_node('Panel').FadeToBlack()
 	
 func UpdateHUD():
 	var HPbar = $PlayerCanvas/PlayerHUD/HPbar

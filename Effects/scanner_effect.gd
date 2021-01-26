@@ -36,7 +36,7 @@ func _draw():
 	draw_line(origin.position, target.position, Color(0, 0, 1, 0.5), 1)
 	draw_line(origin.position, $p1.position, Color(1, 0, 0, c), 1)
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	set_tweens()
 
 func _on_Timer_timeout():

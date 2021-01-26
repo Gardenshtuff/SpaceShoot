@@ -24,7 +24,7 @@ func _ready():
 	mybul.visible = false
 	if !disabled:
 		deatheffect = load('res://Effects/small_splash_1.tscn')
-		player = get_parent().get_node('Player')
+		player = get_tree().get_root().get_node('Game1/Player')
 		mybul.dmg = bulletdmg
 		mybul.position = Vector2(0, 0)
 		$FireTimer.wait_time = waitTime
@@ -32,13 +32,18 @@ func _physics_process(_delta):
 	var _u = move_and_collide(velocity)
 
 func fire():
-	mybul.global_position = global_position
-	mybul.visible = true
-	mybul.velocity = (player.global_position - global_position).normalized() * bulletspeed
+	var nb = mybul.duplicate()
+	nb.dmg = bulletdmg
+	get_parent().add_child(nb)
+	nb.global_position = global_position
+	nb.visible = true
+	nb.velocity = (player.global_position - global_position).normalized() * bulletspeed
 
 func move_action():
-	velocity = (player.global_position - global_position).normalized() * movespeed
-
+	if player != null:
+		velocity = (player.global_position - global_position).normalized() * movespeed
+	else:
+		velocity = Vector2(0,0)
 func _on_SightLine_body_entered(body):
 	if(body.name == 'Player'):
 		$FireTimer.start()
@@ -64,7 +69,7 @@ func onHit(dmgOH):
 		de.global_position = global_position
 		de.scale *= 3
 		de.get_node('CPUParticles2D').emitting = true
-		get_parent().remove_child(self)
+		self.queue_free()
 
 var f = true
 func _on_FireTimer_timeout():
