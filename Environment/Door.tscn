@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Icons/icon.png" type="Texture" id=1]
+[ext_resource path="res://Environment/Door.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.8395, 32.8657 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.32023
+
+[node name="Door" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 1 )
+
+[node name="ActivationArea" type="Area2D" parent="."]
+scale = Vector2( 8, 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+[connection signal="body_entered" from="ActivationArea" to="." method="_on_ActivationArea_body_entered"]
+[connection signal="body_exited" from="ActivationArea" to="." method="_on_ActivationArea_body_exited"]

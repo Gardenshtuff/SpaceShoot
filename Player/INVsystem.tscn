@@ -1,0 +1,41 @@
+[gd_scene format=2]
+
+[node name="INVsystem" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 189.124
+margin_top = 110.097
+margin_right = 229.124
+margin_bottom = 150.097
+rect_scale = Vector2( 9.94306, 8.77706 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = 596.078
+margin_top = 155.454
+margin_right = 636.078
+margin_bottom = 195.454
+rect_scale = Vector2( 6.31049, 6.67849 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect2"]
+margin_right = 40.0
+margin_bottom = 40.0

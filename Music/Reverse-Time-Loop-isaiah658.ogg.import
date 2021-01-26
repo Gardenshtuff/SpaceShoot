@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Reverse-Time-Loop-isaiah658.ogg-75b4818a74628cd1009bb62cf56c2209.oggstr"
+
+[deps]
+
+source_file="res://Music/Reverse-Time-Loop-isaiah658.ogg"
+dest_files=[ "res://.import/Reverse-Time-Loop-isaiah658.ogg-75b4818a74628cd1009bb62cf56c2209.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

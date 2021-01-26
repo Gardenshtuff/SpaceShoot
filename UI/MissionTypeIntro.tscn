@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/SlowType.gd" type="Script" id=1]
+
+[node name="MissionTypeIntro" type="Label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "MISSION 
+Secure the Bag"
+align = 1
+valign = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Timer2" type="Timer" parent="."]
+
+[node name="FadeTween" type="Tween" parent="."]
+
+[node name="FadeTween2" type="Tween" parent="."]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="tween_completed" from="FadeTween" to="." method="_on_FadeTween_tween_completed"]
+[connection signal="tween_completed" from="FadeTween2" to="." method="_on_FadeTween_tween_completed"]

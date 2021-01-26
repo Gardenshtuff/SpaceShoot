@@ -1,0 +1,107 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Effects/scanner_effect.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Effects/hiteffect1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/MissionTypeIntro.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Environment/Target.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemy/CloudBuddySpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Environment/CountDown.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Environment/BetterSwitch.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Player/StatsPage.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Effects/FadeScript.gd" type="Script" id=12]
+[ext_resource path="res://Rooms/Room1.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Rooms/SmallRoom1.tscn" type="PackedScene" id=14]
+
+[node name="Game1" type="Node2D"]
+
+[node name="SmallRoom1" parent="." instance=ExtResource( 14 )]
+position = Vector2( -640.713, -216.083 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Room1" parent="." instance=ExtResource( 13 )]
+position = Vector2( 151.394, -660.865 )
+scale = Vector2( 2, 2 )
+
+[node name="Room2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 149.056, 235.969 )
+rotation = -3.14159
+scale = Vector2( 2, 2 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( -142.441, 487.664 )
+
+[node name="CountDown" parent="Player" instance=ExtResource( 7 )]
+margin_left = -487.382
+margin_top = -299.36
+margin_right = -487.382
+margin_bottom = -299.36
+
+[node name="ScannerEffect" parent="Player" instance=ExtResource( 1 )]
+visible = false
+
+[node name="hiteffect1" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="Target" parent="." instance=ExtResource( 5 )]
+position = Vector2( -181.436, -29.791 )
+
+[node name="Target2" parent="." instance=ExtResource( 5 )]
+position = Vector2( -183.436, 74.2089 )
+
+[node name="Target3" parent="." instance=ExtResource( 5 )]
+position = Vector2( -183.436, 169.209 )
+
+[node name="CloudBuddySpawner" parent="." instance=ExtResource( 6 )]
+position = Vector2( 488.129, 57.9908 )
+
+[node name="CloudBuddySpawner3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 488.129, 170.671 )
+disabled = true
+
+[node name="CloudBuddySpawner2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 486.447, 281.669 )
+
+[node name="CloudBuddySpawner4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 488.129, 385.941 )
+disabled = true
+
+[node name="CDSW" parent="." instance=ExtResource( 10 )]
+position = Vector2( 146.914, 518.612 )
+scale = Vector2( 2.54179, 2.61645 )
+OneShot = true
+AAradius = 30
+
+[node name="Label" type="Label" parent="CDSW"]
+margin_left = -22.0578
+margin_top = -16.6131
+margin_right = 53.9422
+margin_bottom = -2.61307
+rect_scale = Vector2( 0.590199, 0.550741 )
+text = "big switch :)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Panel" type="ColorRect" parent="CanvasLayer"]
+visible = false
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = -321.294
+margin_top = -312.274
+margin_right = -281.294
+margin_bottom = -272.274
+rect_scale = Vector2( 47.6172, 35.343 )
+script = ExtResource( 12 )
+
+[node name="Tween" type="Tween" parent="CanvasLayer/Panel"]
+
+[node name="StatsPage" parent="CanvasLayer" instance=ExtResource( 11 )]
+visible = false
+
+[node name="MissionTypeIntro" parent="CanvasLayer" instance=ExtResource( 4 )]
+margin_right = 2.0
+margin_bottom = 3.0
