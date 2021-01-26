@@ -33,3 +33,7 @@ func _on_host_button_up():
 
 func _on_join_button_up():
 	get_parent().initCLIENT()
+
+
+func _on_pingHost_button_up():
+	pass # Replace with function body.

@@ -1,8 +1,8 @@
 extends Node
 
-var SERVER_PORT = 52539
+var SERVER_PORT = 31400
 var MAX_PLAYERS = 4
-var SERVER_IP = '0000'
+var SERVER_IP = '127.0.0.1'
 
 func initSERVER():
 	var peer = NetworkedMultiplayerENet.new()
@@ -32,18 +32,17 @@ var my_info = { name = "Johnson Magenta", favorite_color = Color8(255, 0, 255) }
 func _player_connected(id):
 	# Called on both clients and server when a peer connects. Send my info to it.
 	rpc_id(id, "register_player", my_info)
+	print('%s connected'%id)
 
 func _player_disconnected(id):
 	player_info.erase(id) # Erase player from info.
-
-func _connected_ok():
-	pass # Only called on clients, not server. Will go unused; not useful here.
+	print("%s disconnected"%id)
 
 func _server_disconnected():
-	pass # Server kicked us; show error and abort.
+	print('Error: Server Disconnected')
 
 func _connected_fail():
-	pass # Could not even connect to server; abort.
+	print('Abort: Connection Failed')
 
 remote func register_player(info):
 	# Get the id of the RPC sender.

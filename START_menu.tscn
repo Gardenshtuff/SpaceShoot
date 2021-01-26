@@ -228,6 +228,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="pingHost" type="Button" parent="."]
+margin_left = 859.797
+margin_top = 435.25
+margin_right = 904.797
+margin_bottom = 455.25
+rect_scale = Vector2( 2.66511, 2.32611 )
+text = "JOIN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="."]
 margin_left = 20.2165
 margin_top = 24.9733
@@ -243,3 +254,4 @@ __meta__ = {
 [connection signal="button_up" from="quit" to="." method="_on_quit_button_up"]
 [connection signal="button_up" from="host" to="." method="_on_host_button_up"]
 [connection signal="button_up" from="join" to="." method="_on_join_button_up"]
+[connection signal="button_up" from="pingHost" to="." method="_on_pingHost_button_up"]
