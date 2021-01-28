@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://START_menu.gd" type="Script" id=1]
+[ext_resource path="res://Music/spacelifeNo14.ogg" type="AudioStream" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "title_bg_anim"
@@ -229,17 +230,17 @@ __meta__ = {
 }
 
 [node name="pingHost" type="Button" parent="."]
-margin_left = 859.797
-margin_top = 435.25
-margin_right = 904.797
-margin_bottom = 455.25
+margin_left = 621.491
+margin_top = 399.469
+margin_right = 690.491
+margin_bottom = 419.469
 rect_scale = Vector2( 2.66511, 2.32611 )
-text = "JOIN"
+text = "pingHost"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 margin_left = 20.2165
 margin_top = 24.9733
 margin_right = 120.217
@@ -249,9 +250,38 @@ text = "OK BUDDY GUY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+autoplay = true
+
+[node name="ID_ENTER" type="Label" parent="."]
+margin_left = 623.363
+margin_top = 244.018
+margin_right = 642.363
+margin_bottom = 258.018
+rect_scale = Vector2( 2.29157, 2.26608 )
+text = "ID:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="TextEdit" parent="ID_ENTER"]
+margin_left = 22.3295
+margin_top = -4.0
+margin_right = 165.33
+margin_bottom = 16.0
+text = "Hunter209"
+context_menu_enabled = false
+wrap_enabled = true
+caret_moving_by_right_click = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
 [connection signal="button_up" from="start" to="." method="_on_start_button_up"]
 [connection signal="button_up" from="quit" to="." method="_on_quit_button_up"]
 [connection signal="button_up" from="host" to="." method="_on_host_button_up"]
 [connection signal="button_up" from="join" to="." method="_on_join_button_up"]
 [connection signal="button_up" from="pingHost" to="." method="_on_pingHost_button_up"]
+[connection signal="text_changed" from="ID_ENTER/text" to="." method="_on_text_text_changed"]

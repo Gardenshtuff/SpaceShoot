@@ -1,97 +1,69 @@
 extends Node
 
-var SERVER_PORT = 31400
-var MAX_PLAYERS = 4
-var SERVER_IP = '127.0.0.1'
+const DEFAULT_IP = '127.0.0.1'
+const DEFAULT_PORT = 31400
+const MAX_PLAYERS = 5
 
-func initSERVER():
-	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(SERVER_PORT, MAX_PLAYERS)
-	get_tree().network_peer = peer
-	print(get_tree().network_peer)
+var players = { }
+var self_data = { name = '', position = Vector2(0, 0) }
 
-func initCLIENT():
-	var peer = NetworkedMultiplayerENet.new()
-	SERVER_IP = IP.get_local_addresses()[0]
-	peer.create_client(SERVER_IP, SERVER_PORT)
-	get_tree().network_peer = peer
-	print(get_tree().network_peer)
+signal player_disconnected
+signal server_disconnected
 
 func _ready():
-	var _s = get_tree().connect("network_peer_connected", self, "_player_connected")
-	_s = get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	_s = get_tree().connect("connected_to_server", self, "_connected_ok")
-	_s = get_tree().connect("connection_failed", self, "_connected_fail")
-	_s = get_tree().connect("server_disconnected", self, "_server_disconnected")
+	var _u = get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
+	_u = get_tree().connect('network_peer_connected', self, '_on_player_connected')
 
-# Player info, associate ID to data
-var player_info = {}
-# Info we send to other players
-var my_info = { name = "Johnson Magenta", favorite_color = Color8(255, 0, 255) }
+func create_server(player_nickname):
+	if player_nickname == "":
+		player_nickname = "N/A"
+	self_data.name = player_nickname
+	players[1] = self_data
+	print("%s created server" % players[1].name)
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
+	get_tree().set_network_peer(peer)
 
-func _player_connected(id):
-	# Called on both clients and server when a peer connects. Send my info to it.
-	rpc_id(id, "register_player", my_info)
-	print('%s connected'%id)
+func connect_to_server(player_nickname):
+	self_data.name = player_nickname
+	var _u = get_tree().connect('connected_to_server', self, '_connected_to_server')
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_client(DEFAULT_IP, DEFAULT_PORT)
+	get_tree().set_network_peer(peer)
 
-func _player_disconnected(id):
-	player_info.erase(id) # Erase player from info.
-	print("%s disconnected"%id)
+func _connected_to_server():
+	var local_player_id = get_tree().get_network_unique_id()
+	players[local_player_id] = self_data
+	print('%s connected to server' % self_data.name)
+	rpc('_send_player_info', local_player_id, self_data)
 
-func _server_disconnected():
-	print('Error: Server Disconnected')
+func _on_player_disconnected(id):
+	players.erase(id)
 
-func _connected_fail():
-	print('Abort: Connection Failed')
+func _on_player_connected(connected_player_id):
+	var local_player_id = get_tree().get_network_unique_id()
+	if not(get_tree().is_network_server()):
+		rpc_id(1, '_request_player_info', local_player_id, connected_player_id)
 
-remote func register_player(info):
-	# Get the id of the RPC sender.
-	var id = get_tree().get_rpc_sender_id()
-	# Store the info
-	player_info[id] = info
+remote func _request_player_info(request_from_id, player_id):
+	if get_tree().is_network_server():
+		rpc_id(request_from_id, '_send_player_info', player_id, players[player_id])
 
-	# Call function to update lobby UI here
-var level_to_load = 'res://Scene1.tscn'
-remote func pre_configure_game():
-	get_tree().set_pause(true) # Pre-pause
-	var selfPeerID = get_tree().get_network_unique_id()
+# A function to be used if needed. The purpose is to request all players in the current session.
+remote func _request_players(request_from_id):
+	if get_tree().is_network_server():
+		for peer_id in players:
+			if( peer_id != request_from_id):
+				rpc_id(request_from_id, '_send_player_info', peer_id, players[peer_id])
 
-	# Load world
-	var world = load(level_to_load).instance()
-	get_node("/root").add_child(world)
+remote func _send_player_info(id, info):
+	players[id] = info
+	var new_player = load('res://Player/Player.tscn').instance()
+	new_player.name = str(id)
+	new_player.set_network_master(id)
+	$'/root/Game1/'.add_child(new_player)
+	new_player.init(info.name, info.position, true)
 
-	# Load my player
-	var my_player = preload('res://Player/Player.tscn').instance()
-	my_player.set_name(str(selfPeerID))
-	my_player.set_network_master(selfPeerID) # Will be explained later
-	get_node("/root/world/players").add_child(my_player)
-
-	# Load other players
-	for p in player_info:
-		var player = preload('res://Player/Player.tscn').instance()
-		player.set_name(str(p))
-		player.set_network_master(p) # Will be explained later
-		get_node("/root/world/players").add_child(player)
-
-	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
-	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
-	rpc_id(1, "done_preconfiguring")
-
-var players_done = []
-remote func done_preconfiguring():
-	var who = get_tree().get_rpc_sender_id()
-	# Here are some checks you can do, for example
-	assert(get_tree().is_network_server())
-	assert(who in player_info) # Exists
-	assert(not who in players_done) # Was not added yet
-
-	players_done.append(who)
-
-	if players_done.size() == player_info.size():
-		rpc("post_configure_game")
-
-remote func post_configure_game():
-	# Only the server is allowed to tell a client to unpause
-	if 1 == get_tree().get_rpc_sender_id():
-		get_tree().set_pause(false)
-		# Game starts now!
+func update_position(id, position):
+	if players.size() > id+1:
+		players[id].position = position

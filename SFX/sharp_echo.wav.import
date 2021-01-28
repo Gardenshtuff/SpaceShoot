@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sharp_echo.wav-373d7819b32c5429343cc9bcdf6e4e8a.sample"
+
+[deps]
+
+source_file="res://SFX/sharp_echo.wav"
+dest_files=[ "res://.import/sharp_echo.wav-373d7819b32c5429343cc9bcdf6e4e8a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

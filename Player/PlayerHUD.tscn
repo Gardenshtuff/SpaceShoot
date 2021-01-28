@@ -52,6 +52,7 @@ __meta__ = {
 }
 
 [node name="objIcon" type="Sprite" parent="."]
+visible = false
 position = Vector2( 865.578, 44.1985 )
 scale = Vector2( 1.22714, 1.15295 )
 texture = ExtResource( 3 )

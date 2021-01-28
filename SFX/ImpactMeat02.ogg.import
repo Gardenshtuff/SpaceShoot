@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ImpactMeat02.ogg-4a46bf602a0696383b8f3809916389c2.oggstr"
+
+[deps]
+
+source_file="res://SFX/ImpactMeat02.ogg"
+dest_files=[ "res://.import/ImpactMeat02.ogg-4a46bf602a0696383b8f3809916389c2.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

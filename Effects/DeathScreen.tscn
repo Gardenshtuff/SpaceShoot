@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SFX/ImpactMeat02.ogg" type="AudioStream" id=1]
 
 [node name="DeathScreen" type="Node2D"]
 scale = Vector2( 0.573071, 0.582369 )
@@ -25,3 +27,7 @@ text = "DEADED"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true

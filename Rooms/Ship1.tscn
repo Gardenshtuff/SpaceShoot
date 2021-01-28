@@ -6,6 +6,7 @@
 [node name="Ship1" type="StaticBody2D"]
 position = Vector2( 525, 303 )
 scale = Vector2( 3, 3 )
+z_index = -2
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

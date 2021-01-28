@@ -16,6 +16,17 @@ var bulletdmg = 5
 
 var CL
 var StatsPage
+
+enum MoveDirection { UP, DOWN, LEFT, RIGHT, NONE }
+puppet var puppet_position = Vector2()
+puppet var puppet_movement = 0
+
+func init(start_position):
+	#$GUI/Nickname.text = nickname
+	global_position = start_position
+	#if is_slave:
+		#$Sprite.texture = load('res://player/player-alt.png')
+
 func _ready():
 	CL = get_node('CL')
 	StatsPage = CL.get_node('StatsPage')
@@ -26,20 +37,10 @@ func _ready():
 	FadeIn()
 
 var vel = Vector2(0,0)
+var puppet_vel = Vector2(0,0)
 
 func _input(event):
 	if(canmove):
-		if (Input.get_action_strength('move_up') > 0 ):
-			vel.y = -moveSPEED
-		elif (Input.get_action_strength('move_down') > 0 ):
-			vel.y = moveSPEED
-		else: vel.y = 0
-		if (Input.get_action_strength('move_left') > 0 ):
-			vel.x = -moveSPEED
-		elif (Input.get_action_strength('move_right') > 0 ):
-			vel.x = moveSPEED
-		else: vel.x = 0
-
 		if !bt and event.is_action_pressed("leftMouseDown") : 
 			bulTimer.start()
 			fireWep()
@@ -47,7 +48,6 @@ func _input(event):
 		if event.is_action_released("leftMouseDown"):
 			bulTimer.stop()
 			bt = false
-			
 		if candodge and event.is_action_pressed('spacebar'):
 			#moveSPEED = 1000
 			#dodge mechanic
@@ -79,6 +79,8 @@ func fireWep():
 			if ray.get_collider().is_in_group('onHit'): 
 				print('player shot %s' % ray.get_collider().name)
 				ray.get_collider().onHit(bulletdmg)
+		# gun audio
+		$gunaudio.play()
 
 # dodge recharge timer
 func _on_DodgeTimer_timeout():
@@ -86,17 +88,43 @@ func _on_DodgeTimer_timeout():
 
 func _physics_process(_delta):
 	update()
-	var _i = move_and_slide(vel, Vector2.UP)
+	#var _i = move_and_slide(vel, Vector2.UP)
 	$MF.visible = false
 	$RH.visible = false
 	
+	var direction = MoveDirection.NONE
+	if is_network_master():
+		vel = Vector2(0,0)
+		if Input.is_action_pressed('move_left'):
+			vel.x = -moveSPEED
+		if Input.is_action_pressed('move_right'):
+			vel.x = moveSPEED
+		if Input.is_action_pressed('move_up'):
+			vel.y = -moveSPEED
+		if Input.is_action_pressed('move_down'):
+			vel.y = moveSPEED
+
+		rset_unreliable('puppet_position', position)
+		rset('puppet_movement', direction)
+		_move(vel)
+	else:
+		_move(puppet_vel)
+		position = puppet_position
+	
+	if get_tree().is_network_server():
+		Network.update_position(int(name), position)
+
+func _move(v):
+	var _u = move_and_slide(v, Vector2.UP)
+
 var killflag = false
 func onHit(dmgOH):
-	HP -= dmgOH
-	UpdateHUD()
-	print('player hit for : %d' % dmgOH)
-	if(HP <= 0 and !killflag): 
-		killPlayer()
+	if HP > 0:
+		HP -= dmgOH
+		UpdateHUD()
+		print('player hit for : %d' % dmgOH)
+		if(HP <= 0 and !killflag): 
+			killPlayer()
 
 func _draw():
 	if(debugON):
@@ -114,13 +142,10 @@ func killPlayer():
 	self.add_child(ef)
 	ef.scale *= 5
 	ef.get_node('CPUParticles2D').emitting = true
-	#get_tree().get_root().get_node('Game1/Scene1/CanvasLayer').
 	add_child(load('res://Effects/DeathScreen.tscn').instance())
 	FadeToBlack()
 	yield(get_tree().create_timer(3), 'timeout')
-	print('DEADED') 
-	# Single Player Only - restarts scene
-	#var _u = get_tree().reload_current_scene()
+	print('DEADED')
 
 func FadeIn():
 	CL.get_node('Panel').FadeIn()
