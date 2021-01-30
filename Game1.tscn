@@ -7,3 +7,7 @@
 script = ExtResource( 3 )
 
 [node name="START_menu" parent="." instance=ExtResource( 5 )]
+margin_left = 3.50497
+margin_top = 3.72238
+margin_right = 3.505
+margin_bottom = 3.72241

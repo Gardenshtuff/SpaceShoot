@@ -17,15 +17,12 @@ var bulletdmg = 5
 var CL
 var StatsPage
 
-enum MoveDirection { UP, DOWN, LEFT, RIGHT, NONE }
-puppet var puppet_position = Vector2()
-puppet var puppet_movement = 0
+#puppet var puppet_position = Vector2()
+#puppet var puppet_vel = Vector2()
 
-func init(start_position):
+func init(_nickname, start_position):
 	#$GUI/Nickname.text = nickname
 	global_position = start_position
-	#if is_slave:
-		#$Sprite.texture = load('res://player/player-alt.png')
 
 func _ready():
 	CL = get_node('CL')
@@ -34,10 +31,7 @@ func _ready():
 	ray.collide_with_bodies = true
 	bulTimer = $BulletTimer
 	UpdateHUD()
-	FadeIn()
-
-var vel = Vector2(0,0)
-var puppet_vel = Vector2(0,0)
+	#FadeIn()
 
 func _input(event):
 	if(canmove):
@@ -48,11 +42,15 @@ func _input(event):
 		if event.is_action_released("leftMouseDown"):
 			bulTimer.stop()
 			bt = false
-		if candodge and event.is_action_pressed('spacebar'):
+		if event.is_action_pressed('spacebar'):
+			Network.debugPos()
+#			print('---')
+#			print(name)
+#			print("%0.0f, %0.0f" % [transform.origin.x, transform.origin.y])
 			#moveSPEED = 1000
 			#dodge mechanic
-			candodge = false
-			$DodgeTimer.start()
+			#candodge = false
+			#$DodgeTimer.start()
 			
 		if event.is_action_pressed('t_key'):
 			StatsPage.visible = !StatsPage.visible
@@ -86,36 +84,31 @@ func fireWep():
 func _on_DodgeTimer_timeout():
 	candodge = true
 
+var vel = Vector2(0,0)
+
+remote func _set_position(pos):
+	global_transform.origin = pos
+
 func _physics_process(_delta):
 	update()
-	#var _i = move_and_slide(vel, Vector2.UP)
 	$MF.visible = false
 	$RH.visible = false
-	
-	var direction = MoveDirection.NONE
-	if is_network_master():
-		vel = Vector2(0,0)
-		if Input.is_action_pressed('move_left'):
-			vel.x = -moveSPEED
-		if Input.is_action_pressed('move_right'):
-			vel.x = moveSPEED
-		if Input.is_action_pressed('move_up'):
-			vel.y = -moveSPEED
-		if Input.is_action_pressed('move_down'):
-			vel.y = moveSPEED
-
-		rset_unreliable('puppet_position', position)
-		rset('puppet_movement', direction)
-		_move(vel)
-	else:
-		_move(puppet_vel)
-		position = puppet_position
-	
+	vel = Vector2()
+	if Input.is_action_pressed('move_left'):
+		vel.x = -moveSPEED
+	if Input.is_action_pressed('move_right'):
+		vel.x = moveSPEED
+	if Input.is_action_pressed('move_up'):
+		vel.y = -moveSPEED
+	if Input.is_action_pressed('move_down'):
+		vel.y = moveSPEED
+	if vel != Vector2():
+		if is_network_master():
+			var _u = move_and_slide(vel, Vector2.UP)
+		rpc_unreliable("_set_position", global_transform.origin)
+		
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)
-
-func _move(v):
-	var _u = move_and_slide(v, Vector2.UP)
 
 var killflag = false
 func onHit(dmgOH):

@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Effects/hiteffect1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Environment/Target.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Enemy/CloudBuddySpawner.tscn" type="PackedScene" id=6]
@@ -95,3 +96,6 @@ position = Vector2( -23.2323, 236.5 )
 [node name="Cover1" parent="." instance=ExtResource( 9 )]
 position = Vector2( -42.8616, 392.575 )
 scale = Vector2( 5.98695, 0.366281 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( -150.803, 476.22 )

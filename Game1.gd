@@ -18,6 +18,8 @@ func loadScene(s):
 	onboardScene = load(s).instance()
 func swapScene():
 	add_child(onboardScene)
+	if is_network_master():
+		Network.current_scene = onboardScene.name
 
 func spawnPlayer(pos):
 	new_player = preload('res://Player/Player.tscn').instance()
@@ -30,12 +32,24 @@ func spawnPlayer(pos):
 
 func initSERVER_G(player_nickname):
 	Network.create_server(player_nickname)
-	new_player = preload('res://player/Player.tscn').instance()
+	add_child(load('res://Lobby1.tscn').instance())
+	remove_child(get_child(0))
+	
+	new_player = preload('res://Player/Player.tscn').instance()
 	new_player.name = str(get_tree().get_network_unique_id())
 	new_player.set_network_master(get_tree().get_network_unique_id())
-	var info = Network.self_data
-	new_player.init(info.position)
 	add_child(new_player)
+	var info = Network.self_data
+	new_player.init(info.name, info.position)
 
 func initCLIENT_G(player_nickname):
 	Network.connect_to_server(player_nickname)
+	add_child(load('res://Lobby1.tscn').instance())
+	remove_child(get_child(0))
+	
+	new_player = preload('res://Player/Player.tscn').instance()
+	new_player.name = str(get_tree().get_network_unique_id())
+	new_player.set_network_master(get_tree().get_network_unique_id())
+	add_child(new_player)
+	var info = Network.self_data
+	new_player.init(info.name, info.position)

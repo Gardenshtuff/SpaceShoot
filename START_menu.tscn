@@ -186,6 +186,7 @@ scale_amount_random = 1.0
 color = Color( 0.956863, 0.898039, 0.419608, 1 )
 
 [node name="start" type="Button" parent="."]
+visible = false
 margin_left = 29.7301
 margin_top = 343.681
 margin_right = 79.7301

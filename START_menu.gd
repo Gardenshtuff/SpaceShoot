@@ -42,10 +42,6 @@ func _on_Tween_tween_completed(_object, _key):
 
 func _on_host_button_up():
 	get_parent().initSERVER_G($ID_ENTER/text.text)
-	FadeToBlack()
-	LEAVEMAIN = true
-	get_parent().loadScene("res://Lobby1.tscn")
-	setButtons(true)
 
 func _on_join_button_up():
 	get_parent().initCLIENT_G($ID_ENTER/text.text)
