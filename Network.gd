@@ -23,6 +23,7 @@ func create_server(IPin, PORTin, player_nickname):
 	peer.create_server(PORTin, MAX_PLAYERS) # Set port on current IP, and Max players allowed in
 	peer.set_bind_ip(IPin)
 	get_tree().set_network_peer(peer)
+	print(IP.get_local_addresses())
 
 func connect_to_server(IPin, PORTin, player_nickname):
 	self_data.name = player_nickname

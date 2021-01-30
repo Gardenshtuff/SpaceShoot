@@ -60,7 +60,8 @@ func fireWep():
 		$MF.look_at($Pointer.global_position)
 		$MF.rotate(PI/2)
 		$MF.visible = true
-	rpc_unreliable("_set_MF", $MF.visible, $MF.global_position)
+	rpc_unreliable("_set_MF", $MF.visible, $MF.global_position, $MF.rotation_degrees,
+								$RH.global_position, $RH.rotation_degrees)
 	
 	if(Input.get_action_strength('leftMouseDown') > 0):
 		ray.position = Vector2(0,0)
@@ -85,9 +86,13 @@ var vel = Vector2(0,0)
 remote func _set_position(pos):
 	global_transform.origin = pos
 
-remote func _set_MF(b, pos):
+remote func _set_MF(b, pos, rot, rpos, rrot):
 	$MF.visible = b
 	$MF.global_position = pos
+	$MF.rotation_degrees = rot
+	$RH.visible = b
+	$RH.global_position = rpos
+	$RH.rotation_degrees = rrot
 
 func _physics_process(_delta):
 	update()
