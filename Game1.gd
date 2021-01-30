@@ -30,8 +30,8 @@ func spawnPlayer(pos):
 	add_child(new_player)
 	new_player.global_position = pos
 
-func initSERVER_G(player_nickname):
-	Network.create_server(player_nickname)
+func initSERVER_G(IPin, PORTin, player_nickname):
+	Network.create_server(IPin, PORTin, player_nickname)
 	add_child(load('res://Lobby1.tscn').instance())
 	remove_child(get_child(0))
 	

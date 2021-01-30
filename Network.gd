@@ -15,18 +15,19 @@ func _ready():
 	var _u = get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
 	_u = get_tree().connect('network_peer_connected', self, '_on_player_connected')
 
-func create_server(player_nickname):
+func create_server(IPin, PORTin, player_nickname):
 	self_data.name = player_nickname
 	players[1] = self_data
-	print("%s created server %s:%s:%s" % [players[1].name, SERVER_NAME, DEFAULT_IP, str(DEFAULT_PORT)])
+	print("%s created server %s:%s:%s" % [players[1].name, SERVER_NAME, IPin, str(PORTin)])
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(DEFAULT_PORT, MAX_PLAYERS) # Set port on current IP, and Max players allowed in
+	peer.create_server(PORTin, MAX_PLAYERS) # Set port on current IP, and Max players allowed in
+	peer.set_bind_ip(IPin)
 	get_tree().set_network_peer(peer)
 
 func connect_to_server(IPin, PORTin, player_nickname):
 	self_data.name = player_nickname
 	print("%s attempting server %s:%s" % [player_nickname, SERVER_NAME, IPin])
-	get_tree().connect('connected_to_server', self, '_connected_to_server')
+	var _u = get_tree().connect('connected_to_server', self, '_connected_to_server')
 	var peer = NetworkedMultiplayerENet.new()
 	
 	peer.create_client(IPin, PORTin) # Connect to IP : PORT

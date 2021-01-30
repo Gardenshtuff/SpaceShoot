@@ -41,7 +41,7 @@ func _on_Tween_tween_completed(_object, _key):
 		self.queue_free()
 
 func _on_host_button_up():
-	get_parent().initSERVER_G($ID_ENTER/text.text)
+	get_parent().initSERVER_G($IP_ENTER/text.text, int($PORT_ENTER/text.text), $ID_ENTER/text.text)
 
 func _on_join_button_up():
 	get_parent().initCLIENT_G($IP_ENTER/text.text, int($PORT_ENTER/text.text), $ID_ENTER/text.text)
