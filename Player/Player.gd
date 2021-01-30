@@ -25,16 +25,18 @@ func init(_nickname, start_position):
 	global_position = start_position
 
 func _ready():
-	CL = get_node('CL')
-	StatsPage = CL.get_node('StatsPage')
-	ray = $RayCast2D
-	ray.collide_with_bodies = true
-	bulTimer = $BulletTimer
-	UpdateHUD()
-	#FadeIn()
+	if is_network_master():
+		CL = get_node('CL')
+		StatsPage = CL.get_node('StatsPage')
+		ray = $RayCast2D
+		ray.collide_with_bodies = true
+		bulTimer = $BulletTimer
+		UpdateHUD()
+	else:
+		$Pointer.visible = false
 
 func _input(event):
-	if(canmove):
+	if is_network_master() and (canmove):
 		if !bt and event.is_action_pressed("leftMouseDown") : 
 			bulTimer.start()
 			fireWep()
@@ -42,16 +44,8 @@ func _input(event):
 		if event.is_action_released("leftMouseDown"):
 			bulTimer.stop()
 			bt = false
-		if event.is_action_pressed('spacebar'):
-			Network.debugPos()
-#			print('---')
-#			print(name)
-#			print("%0.0f, %0.0f" % [transform.origin.x, transform.origin.y])
-			#moveSPEED = 1000
-			#dodge mechanic
-			#candodge = false
-			#$DodgeTimer.start()
-			
+		#if event.is_action_pressed('spacebar'):
+			#Network.debugPos()
 		if event.is_action_pressed('t_key'):
 			StatsPage.visible = !StatsPage.visible
 
@@ -61,10 +55,12 @@ func _on_BulletTimer_timeout():
 func fireWep():
 	# rotate/point around character stuff
 	var point = ($Pointer.global_position - global_position).normalized()
-	$MF.position = point*50
-	$MF.look_at($Pointer.global_position)
-	$MF.rotate(PI/2)
-	$MF.visible = true
+	if is_network_master():
+		$MF.position = point*50
+		$MF.look_at($Pointer.global_position)
+		$MF.rotate(PI/2)
+		$MF.visible = true
+	rpc_unreliable("_set_MF", $MF.visible, $MF.global_position)
 	
 	if(Input.get_action_strength('leftMouseDown') > 0):
 		ray.position = Vector2(0,0)
@@ -89,6 +85,10 @@ var vel = Vector2(0,0)
 remote func _set_position(pos):
 	global_transform.origin = pos
 
+remote func _set_MF(b, pos):
+	$MF.visible = b
+	$MF.global_position = pos
+
 func _physics_process(_delta):
 	update()
 	$MF.visible = false
@@ -109,6 +109,9 @@ func _physics_process(_delta):
 		
 	if get_tree().is_network_server():
 		Network.update_position(int(name), position)
+
+
+
 
 var killflag = false
 func onHit(dmgOH):

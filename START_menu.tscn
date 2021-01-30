@@ -257,10 +257,10 @@ stream = ExtResource( 2 )
 autoplay = true
 
 [node name="ID_ENTER" type="Label" parent="."]
-margin_left = 623.363
-margin_top = 244.018
-margin_right = 642.363
-margin_bottom = 258.018
+margin_left = 36.2398
+margin_top = 201.181
+margin_right = 55.2398
+margin_bottom = 215.181
 rect_scale = Vector2( 2.29157, 2.26608 )
 text = "ID:"
 __meta__ = {
@@ -273,6 +273,54 @@ margin_top = -4.0
 margin_right = 165.33
 margin_bottom = 16.0
 text = "Hunter209"
+context_menu_enabled = false
+wrap_enabled = true
+caret_moving_by_right_click = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IP_ENTER" type="Label" parent="."]
+margin_left = 622.103
+margin_top = 247.798
+margin_right = 641.103
+margin_bottom = 261.798
+rect_scale = Vector2( 2.29157, 2.26608 )
+text = "IP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="TextEdit" parent="IP_ENTER"]
+margin_left = 22.3295
+margin_top = -4.0
+margin_right = 165.33
+margin_bottom = 16.0
+text = "127.0.0.1"
+context_menu_enabled = false
+wrap_enabled = true
+caret_moving_by_right_click = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PORT_ENTER" type="Label" parent="."]
+margin_left = 576.746
+margin_top = 298.195
+margin_right = 614.746
+margin_bottom = 312.195
+rect_scale = Vector2( 2.29157, 2.26608 )
+text = "PORT:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="TextEdit" parent="PORT_ENTER"]
+margin_left = 42.1226
+margin_top = -2.88802
+margin_right = 185.123
+margin_bottom = 17.112
+text = "31400"
 context_menu_enabled = false
 wrap_enabled = true
 caret_moving_by_right_click = false

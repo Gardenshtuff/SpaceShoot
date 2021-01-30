@@ -42,8 +42,8 @@ func initSERVER_G(player_nickname):
 	var info = Network.self_data
 	new_player.init(info.name, info.position)
 
-func initCLIENT_G(player_nickname):
-	Network.connect_to_server(player_nickname)
+func initCLIENT_G(IPin, PORTin, player_nickname):
+	Network.connect_to_server(IPin, PORTin, player_nickname)
 	add_child(load('res://Lobby1.tscn').instance())
 	remove_child(get_child(0))
 	

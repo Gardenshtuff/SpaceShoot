@@ -1,5 +1,6 @@
 extends Node
 
+const SERVER_NAME = "SERVER1"
 const DEFAULT_IP = '127.0.0.1'
 const DEFAULT_PORT = 31400
 const MAX_PLAYERS = 5
@@ -17,16 +18,18 @@ func _ready():
 func create_server(player_nickname):
 	self_data.name = player_nickname
 	players[1] = self_data
-	print("%s created server at %s:%s" % [players[1].name, DEFAULT_IP, str(DEFAULT_PORT)])
+	print("%s created server %s:%s:%s" % [players[1].name, SERVER_NAME, DEFAULT_IP, str(DEFAULT_PORT)])
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
+	peer.create_server(DEFAULT_PORT, MAX_PLAYERS) # Set port on current IP, and Max players allowed in
 	get_tree().set_network_peer(peer)
 
-func connect_to_server(player_nickname):
+func connect_to_server(IPin, PORTin, player_nickname):
 	self_data.name = player_nickname
+	print("%s attempting server %s:%s" % [player_nickname, SERVER_NAME, IPin])
 	get_tree().connect('connected_to_server', self, '_connected_to_server')
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(DEFAULT_IP, DEFAULT_PORT)
+	
+	peer.create_client(IPin, PORTin) # Connect to IP : PORT
 	get_tree().set_network_peer(peer)
 
 func _connected_to_server():

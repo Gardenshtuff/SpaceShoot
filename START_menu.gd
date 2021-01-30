@@ -44,7 +44,7 @@ func _on_host_button_up():
 	get_parent().initSERVER_G($ID_ENTER/text.text)
 
 func _on_join_button_up():
-	get_parent().initCLIENT_G($ID_ENTER/text.text)
+	get_parent().initCLIENT_G($IP_ENTER/text.text, int($PORT_ENTER/text.text), $ID_ENTER/text.text)
 
 func _on_pingHost_button_up():
 	pass # Replace with function body.
